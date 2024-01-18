@@ -1,16 +1,16 @@
-FROM amazonlinux:2
-FROM amazoncorretto:8
-FROM maven:3.6-amazoncorretto-8
+FROM amazonlinux:2023
+FROM amazoncorretto:17
+FROM maven:3-amazoncorretto-17
 
 ARG spark_uid=1000
 RUN yum install -y procps
 
 WORKDIR /tmp/
 ADD pom.xml /tmp
-RUN curl -o ./spark-3.4.1-bin-without-hadoop.tgz https://archive.apache.org/dist/spark/spark-3.4.1/spark-3.4.1-bin-without-hadoop.tgz
-RUN tar -xzf spark-3.4.1-bin-without-hadoop.tgz && \
-    mv spark-3.4.1-bin-without-hadoop /opt/spark && \
-    rm spark-3.4.1-bin-without-hadoop.tgz
+RUN curl -o ./spark-3.5.0-bin-without-hadoop.tgz https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-without-hadoop.tgz
+RUN tar -xzf spark-3.5.0-bin-without-hadoop.tgz && \
+    mv spark-3.5.0-bin-without-hadoop /opt/spark && \
+    rm spark-3.5.0-bin-without-hadoop.tgz
 RUN mvn dependency:copy-dependencies -DoutputDirectory=/opt/spark/jars/
 RUN rm /opt/spark/jars/jsr305-3.0.0.jar && \
     rm /opt/spark/jars/jersey-*-1.19.jar && \
